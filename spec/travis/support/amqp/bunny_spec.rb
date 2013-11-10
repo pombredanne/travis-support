@@ -12,6 +12,11 @@ if RUBY_PLATFORM != 'java'
       Travis::Amqp.config = { :password => 'password' }
       Travis::Amqp.config.should == { :pass => 'password' }
     end
+
+    it "converts a string tls value to a boolean" do
+      Travis::Amqp.config = { :tls => 'yep' }
+      Travis::Amqp.config.should == { :ssl => true, :tls => true }
+    end
   end
 
 end

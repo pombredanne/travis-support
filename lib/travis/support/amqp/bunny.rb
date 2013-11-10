@@ -1,8 +1,7 @@
 module Travis
   module Amqp
-    autoload :Publisher,       'travis/support/amqp/bunny/publisher'
-    autoload :FanoutPublisher, 'travis/support/amqp/bunny/publisher'
-    autoload :Consumer,        'travis/support/amqp/bunny/consumer'
+    require 'travis/support/amqp/bunny/publisher'
+    require 'travis/support/amqp/bunny/consumer'
 
     class << self
       def config
@@ -13,6 +12,10 @@ module Travis
         config = config.dup
         config[:user] = config.delete(:username) if config[:username]
         config[:pass] = config.delete(:password) if config[:password]
+        if config.key?(:tls)
+          config[:ssl]  = true
+          config[:tls]  = true
+        end
         @config = config
       end
 
